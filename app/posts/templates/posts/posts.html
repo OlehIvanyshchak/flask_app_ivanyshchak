@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Posts{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('.static', filename='css/posts.css') }}">
+{% endblock %}
 {% block content %}
-<h1 class="mb-4">Posts</h1>
-<a href="{{ url_for('posts.add_post') }}" class="btn btn-primary my-4">Add Post</a>
+<h1 class="mb-4 title">Posts</h1>
+<a href="{{ url_for('.add_post') }}" class="btn btn-primary my-4">Add Post</a>
 <div class="row">
     {% for post in posts %}
     <div class="col-md-4 mb-4">
         <div class="card h-100">
             <div class="card-body">
-                <img class="imageC mb-3" src="{{ url_for('static', filename='img/mercedes.jpg') }}">
+                <img class="imageC mb-3" src="{{ url_for('.static', filename='img/mercedes.jpg') }}">
                 <h3>{{post["title"]}}</h3>
                 <p><strong>Author:</strong> {{post["author"]}}</p>
                 <p><strong>Category:</strong> {{post["category"]}}</p>
                 <p><strong>Published:</strong> {{post["publish_date"]}}</p>
                 <p><strong>Author:</strong> {{post["author"]}}</p>
                 <p><strong>Status:</strong> {% if post["is_active"] %}Active{% else %}Inactive{% endif %}</p>
-                <a href="{{ url_for('posts.get_post', id=post.id) }}"
-                    class="btn btn-sm btn-outline-primary float-end">Read More</a>
+                <p><strong>Content:</strong> {{ post["content"] | truncate(10) }}</p>
+                <a href="{{ url_for('.get_post', id=post.id) }}" class="btn btn-sm btn-outline-primary float-end">Read
+                    More</a>
             </div>
         </div>
     </div>
