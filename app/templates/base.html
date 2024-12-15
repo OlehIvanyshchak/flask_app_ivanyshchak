@@ -10,10 +10,24 @@
 </head>
 
 <body>
-    <header>
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+            <h1>Flask Application</h1>
+        </div>
         {% block header %}
+        {% include 'nav.html' %}
         {% endblock %}
     </header>
+    {% with msg = get_flashed_messages(with_categories=True) %}
+    {% if msg %}
+    {% for category, message in msg %}
+    <div class="alert alert-{{ category }} alert-dismissible show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
     <main>
         <div class="container mt-4">
             {% block content %}{% endblock %}

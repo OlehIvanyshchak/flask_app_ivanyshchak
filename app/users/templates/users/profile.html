@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Greeting Page{% endblock %}
+{% block content %}
+<h1>Hi, <strong>{{username}}!</strong></h1>
+<a class="btn btn-primary" href="{{ url_for('users.logout') }}">Logout</a>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <h3>Встановити кукі</h3>
+        <form action="{{ url_for('users.set_cookie') }}" method="POST">
+            <div class="form-group">
+                <input type="text" name="key" class="form-control mb-2" placeholder="Cookie Key" required>
+                <input type="text" name="value" class="form-control mb-2" placeholder="Cookie Value" required>
+                <input type="number" name="max_age" class="form-control mb-2" placeholder="Expiration (seconds)"
+                    value="60" required>
+                <button type="submit" class="btn btn-primary">Встановіть кукі</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <h3>Видалити кукі</h3>
+        <form action="{{ url_for('users.delete_cookie') }}" method="POST">
+            <div class="form-group">
+                <input type="text" name="key" class="form-control mb-2" placeholder="Cookie Key" required>
+                <button type="submit" class="btn btn-warning">Видалити кукі</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h3>Видаліть всі кукі</h3>
+        <form action="{{ url_for('users.delete_all_cookies') }}" method="POST">
+            <button type="submit" class="btn btn-danger">Видаліть всі кукі</button>
+        </form>
+    </div>
+</div>
+<div class="mt-4">
+    <h3>Поточні кукі</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ключ</th>
+                <th>Значення</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in cookies.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
