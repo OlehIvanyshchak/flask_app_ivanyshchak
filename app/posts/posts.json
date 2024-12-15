@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "title": "test post",
+        "content": "test",
+        "is_active": true,
+        "publish_date": "2024-12-15",
+        "category": "science",
+        "author": "admin"
+    },
+    {
+        "id": 2,
+        "title": "test 2 ",
+        "content": "test",
+        "is_active": false,
+        "publish_date": "2024-12-15",
+        "category": "tech",
+        "author": "admin"
+    },
+    {
+        "id": 3,
+        "title": "new post 3",
+        "content": "content for post 3",
+        "is_active": true,
+        "publish_date": "2024-12-15",
+        "category": "lifestyle",
+        "author": "admin"
+    }
+]

@@ -19,5 +19,6 @@ def resume():
     return render_template("resume.html", title="Моє резюме")
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
