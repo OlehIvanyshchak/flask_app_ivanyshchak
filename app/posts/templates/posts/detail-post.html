@@ -3,5 +3,5 @@
 {% block content %}
 <h1>Post № {{post["id"]}}</h1>
 <p>{{post.get("content")}}</p>
-<a href="/posts">Back to posts</a>
+<a href="{{ url_for('posts.get_posts') }}">Return to posts</a>
 {% endblock %}
