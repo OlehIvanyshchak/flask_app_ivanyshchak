@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Greeting Page{% endblock %}
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Flask App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('users.greeting', name='John', age=30) }}">Greet John</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('users.admin') }}">Admin</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title">Hello:)</h1>
+            <h2 class="card-subtitle mb-2 text-primary">User: {{ name }}</h2>
+            {% if age %}
+            <h2 class="card-text text-info">Age: {{ age }}</h2>
+            {% else %}
+            <h2 class="card-text text-warning">Age: empty</h2>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
