@@ -1,13 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     BooleanField,
-    DateField,
+    DateTimeLocalField,
     SelectField,
     StringField,
     TextAreaField,
     SubmitField,
 )
 from wtforms.validators import DataRequired, Length
+
 CATEGORIES = [
     ("tech", "Technology"),
     ("science", "Science"),
@@ -21,9 +22,6 @@ class PostForm(FlaskForm):
         "Content", render_kw={"rows": 5, "cols": 40}, validators=[DataRequired()]
     )
     is_active = BooleanField("Active Post")
-    publish_date = DateField(
-        "Publish Date", format="%Y-%m-%d", validators=[DataRequired()]
-    )
-    category = SelectField("Category", choices=CATEGORIES,
-                           validators=[DataRequired()])
+    publish_date = DateTimeLocalField("Publish Date", format="%Y-%m-%dT%H:%M")
+    category = SelectField("Category", choices=CATEGORIES, validators=[DataRequired()])
     submit = SubmitField("Add Post")

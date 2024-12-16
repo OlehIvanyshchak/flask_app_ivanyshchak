@@ -13,14 +13,19 @@
             <div class="card-body">
                 <img class="imageC mb-3" src="{{ url_for('.static', filename='img/mercedes.jpg') }}">
                 <h3>{{post["title"]}}</h3>
-                <p><strong>Author:</strong> {{post["author"]}}</p>
                 <p><strong>Category:</strong> {{post["category"]}}</p>
-                <p><strong>Published:</strong> {{post["publish_date"]}}</p>
+                <p><strong>Published:</strong> {{post["posted"]}}</p>
                 <p><strong>Author:</strong> {{post["author"]}}</p>
                 <p><strong>Status:</strong> {% if post["is_active"] %}Active{% else %}Inactive{% endif %}</p>
                 <p><strong>Content:</strong> {{ post["content"] | truncate(10) }}</p>
                 <a href="{{ url_for('.get_post', id=post.id) }}" class="btn btn-sm btn-outline-primary float-end">Read
                     More</a>
+                <form action="{{ url_for('.delete_post', id=post.id) }}" method="POST" class="mb-3">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <form action="{{ url_for('.edit_post', id=post.id) }}" method="POST">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
             </div>
         </div>
     </div>

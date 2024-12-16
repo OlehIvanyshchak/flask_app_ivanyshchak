@@ -9,12 +9,19 @@
     <img class="imageC" src="{{ url_for('.static', filename='img/mercedes.jpg') }}">
     <p><strong>ID:</strong> {{post["id"]}}</p>
     <p><strong>Category:</strong> {{post["category"]}}</p>
-    <p><strong>Published:</strong> {{post["publish_date"]}}</p>
+    <p><strong>Published:</strong> {{post["posted"]}}</p>
     <p><strong>Author:</strong> {{post["author"]}}</p>
     <p><strong>Status:</strong> {% if post["is_active"] %}Active{% else %}Inactive{% endif %}</p>
     <div class="post-content">
         <p><strong>Content:</strong> {{post["content"]}}</p>
     </div>
+    <form action="{{ url_for('.delete_post', id=post.id) }}" method="POST">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <br>
+    <form action="{{ url_for('.edit_post', id=post.id) }}" method="POST">
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
     <a href="{{ url_for('posts.get_posts') }}" class="btn btn-secondary mt-3">Back to Posts</a>
 </div>
 </div>
