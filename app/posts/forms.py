@@ -6,6 +6,7 @@ from wtforms import (
     StringField,
     TextAreaField,
     SubmitField,
+    SelectMultipleField,
 )
 from wtforms.validators import DataRequired, Length
 
@@ -24,4 +25,6 @@ class PostForm(FlaskForm):
     is_active = BooleanField("Active Post")
     publish_date = DateTimeLocalField("Publish Date", format="%Y-%m-%dT%H:%M")
     category = SelectField("Category", choices=CATEGORIES, validators=[DataRequired()])
+    author_id = SelectField("Author", coerce=int)
+    tags = SelectMultipleField("Tags", coerce=int)
     submit = SubmitField("Add Post")

@@ -8,9 +8,11 @@
     <h1>{{post["title"]}}</h1>
     <img class="imageC" src="{{ url_for('.static', filename='img/mercedes.jpg') }}">
     <p><strong>ID:</strong> {{post["id"]}}</p>
+    <p><strong>Tags:</strong> {% for tag in post["tags"] %}{{tag["name"]}}{% if not loop.last %}, {% endif
+        %}{% endfor %}</p>
     <p><strong>Category:</strong> {{post["category"]}}</p>
     <p><strong>Published:</strong> {{post["posted"]}}</p>
-    <p><strong>Author:</strong> {{post["author"]}}</p>
+    <p><strong>Author:</strong> {{post["author"]["username"]}}</p>
     <p><strong>Status:</strong> {% if post["is_active"] %}Active{% else %}Inactive{% endif %}</p>
     <div class="post-content">
         <p><strong>Content:</strong> {{post["content"]}}</p>
