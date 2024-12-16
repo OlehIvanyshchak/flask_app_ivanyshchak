@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Account{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3 text-center mb-4">
+        <h2 class="display-5 text-success">Ласкаво просимо на сторінку: {{user.username}}!</h2>
+        <p class="lead">Електронна адреса: {{user.email}}</p>
+    </div>
+</div>
+<h3 class="mt-5">Таблиця всіх користувачів</h3>
+<p>Всього користувачі: {{ user_count }}</p>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in all_users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -4,6 +4,10 @@ from flask import (render_template, request, redirect, url_for,
                    flash,
                    )
 from . import user_bp
+from app.users.models import User
+from app import db
+from app.users.forms import RegistrationForm, LoginForm
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 @user_bp.route("/hi/<string:name>")
@@ -59,7 +63,38 @@ def delete_all_cookies():
     return response
 
 
+@user_bp.route("/register", methods=["GET", "POST"])
+def register():
+    if current_user.is_authenticated:
+        flash("You are already logged in", "info")
+        return redirect(url_for('users.get_account'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        email = form.email.data.lower()
+        user = User(username=form.username.data, email=email)
+        user.hash_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('users.login'))
+    return render_template('users/register.html', title='Register', form=form)
+
+
+@user_bp.route("/account", methods=["GET", "POST"])
+@login_required
+def get_account():
+    all_users = User.query.all()
+    user_count = len(all_users)
+    return render_template(
+        "users/account.html",
+        user=current_user,
+        all_users=all_users,
+        user_count=user_count,
+    )
+
+
 @user_bp.route("/profile")
+@login_required
 def get_profile():
     if "username" in session:
         username = session["username"]
@@ -72,22 +107,24 @@ def get_profile():
 
 @user_bp.route("/login", methods=["GET", "POST"])
 def login():
-    if "username" in session:
-        return redirect(url_for("users.get_profile"))
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        if username == "admin" and password == "admin":
-            session["username"] = username
+    if current_user.is_authenticated:
+        flash("You are already logged in", "info")
+        return redirect(url_for('users.get_account'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data.lower()
+        user = User.query.filter_by(email=email).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember.data)
             flash("Login successful", "success")
-            return redirect(url_for("users.get_profile"))
-        else:
-            flash("Invalid credentials", "danger")
-    return render_template("users/login.html")
+            return redirect(url_for('users.get_account'))
+        flash("Invalid credentials", "danger")
+    return render_template('users/login.html', form=form, title='Login')
 
 
 @user_bp.route("/logout")
 def logout():
     session.pop("username", None)
+    logout_user()
     flash("You have been logged out", "success")
     return redirect(url_for("users.login"))
